@@ -279,6 +279,56 @@ app.post('/amountpaid-data', async (req, res) => {
         return res.status(500).json({ message: 'Error saving data' });
     }
 });
+app.put('/update-amountpaid', async (req, res) => {
+    try {
+        // MongoDB Atlas connection string
+        const mongoURI = 'mongodb+srv://viaseguro:via123@cluster0.quzafgm.mongodb.net/?retryWrites=true&w=majority';
+        const dbName = 'Amount_paid_details'; // Replace with your database name
+        const collectionName = 'AD'; // Replace with your collection name
+        const { Amountpaid, Id } = req.query;
+
+        // Connect to MongoDB Atlas
+        const client = new MongoClient(mongoURI, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+        });
+
+        await client.connect();
+        console.log('Connected to MongoDB Atlas');
+
+        // Get a reference to the collection
+        const collection = client.db(dbName).collection(collectionName);
+
+        // Define the filter based on the Id
+        const filter = { Id: Id };
+
+        // Define the update operation
+        const updateOperation = {
+            $set: {
+                Amountpaid: Amountpaid,
+            },
+        };
+
+        // Update the document that matches the filter
+        const result = await collection.updateOne(filter, updateOperation);
+
+        if (result.matchedCount === 0) {
+            console.log('No document found with the given Id');
+            return res.status(404).json({ message: 'No document found with the given Id' });
+        }
+
+        console.log('Amountpaid updated successfully');
+
+        // Close the MongoDB connection
+        client.close();
+        console.log('Connection closed');
+
+        return res.status(200).json({ message: 'Amountpaid updated successfully' });
+    } catch (error) {
+        console.error('Error updating Amountpaid:', error);
+        return res.status(500).json({ message: 'Error updating Amountpaid' });
+    }
+});
 
 
 // Start the Express server
