@@ -2,6 +2,7 @@ const express = require('express');
 const { MongoClient } = require('mongodb');
 const app = express();
 const port = 3000;
+const bcrypt = require('bcrypt');
 
 
 // Middleware to parse JSON in request body
@@ -33,12 +34,12 @@ app.post('/ls-data', async (req, res) => {
 
         // Get a reference to the collection
         const collection = client.db(dbName).collection(collectionName);
-
+         const hashedPassword = await bcrypt.hash(Password, 10);
         // Create an object to insert into MongoDB
         const dataToInsert = {
             Username: Name,
             Mobilenumber: Mobile,
-            Password: Password
+            Password: hashedPassword
             // Add more fields as needed
         };
 
@@ -192,8 +193,8 @@ app.post('/premium-data', async (req, res) => {
 
         // MongoDB Atlas connection string
         const mongoURI = 'mongodb+srv://viaseguro:via123@cluster0.quzafgm.mongodb.net/?retryWrites=true&w=majority';
-        const dbName = 'Termlife_insurance_details'; // Replace with your database name
-        const collectionName = 'TD'; // Replace with your collection name
+        const dbName = 'Premium_details'; // Replace with your database name
+        const collectionName = 'PD'; // Replace with your collection name
         const { Plan,Id,Premium,Name } = req.query;
 
 
