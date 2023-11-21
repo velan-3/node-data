@@ -34,12 +34,12 @@ app.post('/ls-data', async (req, res) => {
 
         // Get a reference to the collection
         const collection = client.db(dbName).collection(collectionName);
-         const hashedPassword = await bcrypt.hash(Password, 10);
+         //const hashedPassword = await bcrypt.hash(Password, 10);
         // Create an object to insert into MongoDB
         const dataToInsert = {
             Username: Name,
             Mobilenumber: Mobile,
-            Password: hashedPassword
+            Password: Password
             // Add more fields as needed
         };
 
