@@ -37,9 +37,9 @@ app.post('/ls-data', async (req, res) => {
          //const hashedPassword = await bcrypt.hash(Password, 10);
         // Create an object to insert into MongoDB
         const dataToInsert = {
-            Username: Name,
-            Mobilenumber: Mobile,
-            Password: Password
+            Username:Name,
+            Mobilenumber:Mobile,
+            Password:Password
             // Add more fields as needed
         };
         console.log(dataToInsert);
