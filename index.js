@@ -42,7 +42,7 @@ app.post('/ls-data', async (req, res) => {
             Password: Password
             // Add more fields as needed
         };
-
+        console.log(dataToInsert);
         // Insert the object into the collection
         const result = await collection.insertOne(dataToInsert);
         console.log('Data saved to MongoDB Atlas:');
